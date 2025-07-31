@@ -1,33 +1,157 @@
-## SEC.sh
+````markdown
+# 🛡️ Shastra
 
-This script is designed to detect SQL injection vulnerabilities in a list of URLs. It uses the `bash` programming language and `curl` command to fetch the response from each URL and check for SQL syntax errors in the response.
+**Shastra** is a powerful and flexible SQL Injection (SQLi) scanner and static analyzer built using [Playwright](https://playwright.dev/), with support for dynamic form fuzzing, header injection, parameter tampering, and optional static code analysis via Bandit.  
 
-### How to Use
+Inspired by the Sanskrit word *Shastra* (शास्त्र) meaning **weapon** or **scripture**, this tool aims to give ethical hackers and security researchers a precision weapon to find and eliminate vulnerabilities.
 
-1. Save the script as `SEC.sh` in your preferred directory.
-2. Create a text file named `urls.txt` and list the URLs you want to test for SQL injection vulnerabilities. Each URL should be on a new line.
-3. Open your terminal and navigate to the directory where you saved the script.
-4. Run the script by executing the following command:
-`
-chmod +x SEC.sh
-`
-5. Run the script using bash
+---
+<img width="1396" height="973" alt="Screenshot 2025-07-31 095120" src="https://github.com/user-attachments/assets/231815e9-b02c-487c-852e-7198a0a22e9a" />
+
+## ⚙️ Features
+
+- 🔎 Dynamic SQL Injection detection using full browser emulation (Playwright)
+- 🧪 Automatic fuzzing of:
+  - Query parameters
+  - Form inputs
+  - HTTP headers
+  - URL path
+- 🐛 Optional static analysis using Bandit
+- 🧰 Customizable payloads and error signature detection
+- 🖥️ Debug mode to dump raw HTTP requests/responses
+- 📦 JSON output for easy reporting or integration
+- 🎨 Colorful terminal output with [Rich](https://github.com/Textualize/rich)
+
+---
+
+## 🛠 Installation
+
+### 1. Clone the Repository
 ```bash
-bash SEC.sh urls.txt
+git clone https://github.com/yourusername/shastra.git
+cd shastra
+````
+
+### 2. Install Python Requirements
+
+```bash
+pip install -r requirements.txt
 ```
-Replace `urls.txt` with the path to your `urls.txt` file if it's not in the same directory as the script.
 
-### Script Explanation
+### 3. Install Playwright Browsers
 
-The script reads the URLs from the `urls.txt` file and performs the following actions for each URL:
+```bash
+playwright install
+```
 
-1. Split the query string into individual parameters.
-2. Append a single quote to each parameter to simulate SQL injection.
-3. Fetch the response from the modified URL using `curl`.
-4. Check if the response contains any SQL syntax errors.
-5. If a SQL syntax error is found, the URL is marked as "Vulnerable" in red color.
-6. If no SQL syntax error is found, the URL is marked as "Not vulnerable" in green color.
+---
 
-### Limitations
+## 🚀 Usage
 
-This script is a basic detection tool and may not cover all possible cases of SQL injection vulnerabilities. It is recommended to use this script as a starting point and perform a thorough manual review and testing to confirm the vulnerability.
+### Scan a single URL
+
+```bash
+python shastra.py -u https://example.com/page.php?id=1
+```
+
+### Scan multiple URLs from a file
+
+```bash
+python shastra.py -l urls.txt
+```
+
+### Output results to JSON
+
+```bash
+python shastra.py -u https://example.com -o results.json
+```
+
+### Fuzz additional headers
+
+```bash
+python shastra.py -u https://target.com -H Referer -H X-Forwarded-For
+```
+
+### Increase concurrency and reduce delay
+
+```bash
+python shastra.py -l urls.txt --threads 5 --delay 0.5
+```
+
+### Show raw HTTP requests and responses (debug mode)
+
+```bash
+python shastra.py -u https://example.com --debug
+```
+
+---
+
+## 🧪 Sample Output
+
+```json
+{
+  "dynamic": [
+    {
+      "https://example.com/page.php?id=1": [
+        [
+          "https://example.com/page.php?id='",
+          "param id",
+          "'",
+          ["error signature"]
+        ]
+      ]
+    }
+  ],
+  "static": [
+    {
+      "filename": "somefile.py",
+      "line_number": 23,
+      "issue_text": "Possible SQL injection via string-based query construction",
+      ...
+    }
+  ]
+}
+```
+
+---
+
+## ⚡ Advanced
+
+### Customize Payloads
+
+Edit the `SQL_PAYLOADS` list in `shastra.py`:
+
+```python
+SQL_PAYLOADS = ["'", "''", "--", "-- OR 1=1", "--1=1"]
+```
+
+### Customize Error Matchers
+
+Edit the `ERROR_SIGNS` list:
+
+```python
+ERROR_SIGNS = ["sql syntax", "mysql", "ora-", "syntax error", "unclosed quotation"]
+```
+
+---
+
+## 🔒 Disclaimer
+
+**Shastra is intended for ethical and legal use only.**
+Do not use it on websites or systems you do not own or have explicit permission to test. Unauthorized usage may be illegal.
+
+---
+
+## 🧑‍💻 Author
+
+**Shastra** is developed by [mrgreyhat07](https://github.com/mrgreyhat07)
+Contributions, ideas, and pull requests are welcome!
+
+---
+
+```
+
+---
+
+Let me know if you'd like a logo suggestion, GitHub badges, or a sample Bandit config (`bandit.yaml`) to go along with the repo.
+```
