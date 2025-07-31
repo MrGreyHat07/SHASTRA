@@ -3,7 +3,8 @@
 
 **Shastra** is a powerful and flexible SQL Injection (SQLi) scanner and static analyzer built using [Playwright](https://playwright.dev/), with support for dynamic form fuzzing, header injection, parameter tampering, and optional static code analysis via Bandit.  
 ````
-<img width="1432" height="984" alt="Screenshot 2025-07-31 101345" src="https://github.com/user-attachments/assets/f76782cb-6bec-4c76-8f81-ed9c1144340e" />
+<img width="872" height="986" alt="Screenshot 2025-07-31 220053" src="https://github.com/user-attachments/assets/8e301a4d-082c-42da-b52f-e10751ef0b73" />
+
 
 
 ````
