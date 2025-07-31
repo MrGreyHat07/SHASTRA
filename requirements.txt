@@ -1,0 +1,6 @@
+playwright>=1.41.2
+beautifulsoup4>=4.12.3
+rich>=13.7.1
+tldextract>=3.6.0
+bandit>=1.7.7
+pyfiglet>=1.0.2
